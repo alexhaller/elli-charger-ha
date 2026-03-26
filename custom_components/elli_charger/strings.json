@@ -8,6 +8,13 @@
           "email": "Email",
           "password": "Password"
         }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate Elli Charger",
+        "description": "Your Elli credentials are no longer valid. Please enter your password again.",
+        "data": {
+          "password": "Password"
+        }
       }
     },
     "error": {
@@ -16,7 +23,8 @@
       "unknown": "Unexpected error occurred"
     },
     "abort": {
-      "already_configured": "This Elli account is already configured"
+      "already_configured": "This Elli account is already configured",
+      "reauth_successful": "Re-authentication was successful"
     }
   }
 }

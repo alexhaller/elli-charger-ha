@@ -19,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_EMAIL): str,
+        vol.Required(CONF_EMAIL): vol.Email(),
         vol.Required(CONF_PASSWORD): str,
     }
 )
@@ -38,7 +38,6 @@ class ElliConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             try:
-                # Validate the credentials
                 await self._test_credentials(
                     user_input[CONF_EMAIL],
                     user_input[CONF_PASSWORD],
@@ -47,11 +46,10 @@ class ElliConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "cannot_connect"
             except InvalidAuth:
                 errors["base"] = "invalid_auth"
-            except Exception:  # pylint: disable=broad-except
-                _LOGGER.exception("Unexpected exception")
+            except Exception:
+                _LOGGER.exception("Unexpected exception during config flow")
                 errors["base"] = "unknown"
             else:
-                # Create a unique ID based on email
                 await self.async_set_unique_id(user_input[CONF_EMAIL])
                 self._abort_if_unique_id_configured()
 
@@ -66,20 +64,55 @@ class ElliConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
+    async def async_step_reauth(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Handle re-authentication."""
+        return await self.async_step_reauth_confirm()
+
+    async def async_step_reauth_confirm(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Handle re-authentication confirmation."""
+        errors: dict[str, str] = {}
+
+        if user_input is not None:
+            reauth_entry = self._get_reauth_entry()
+            try:
+                await self._test_credentials(
+                    reauth_entry.data[CONF_EMAIL],
+                    user_input[CONF_PASSWORD],
+                )
+            except CannotConnect:
+                errors["base"] = "cannot_connect"
+            except InvalidAuth:
+                errors["base"] = "invalid_auth"
+            except Exception:
+                _LOGGER.exception("Unexpected exception during re-auth")
+                errors["base"] = "unknown"
+            else:
+                return self.async_update_reload_and_abort(
+                    reauth_entry,
+                    data={**reauth_entry.data, CONF_PASSWORD: user_input[CONF_PASSWORD]},
+                )
+
+        return self.async_show_form(
+            step_id="reauth_confirm",
+            data_schema=vol.Schema({vol.Required(CONF_PASSWORD): str}),
+            errors=errors,
+        )
+
     async def _test_credentials(self, email: str, password: str) -> None:
         """Validate credentials."""
         try:
             client = ElliAPIClient()
-            # Try to login to validate credentials
             await self.hass.async_add_executor_job(client.login, email, password)
             client.close()
         except ValueError as err:
-            _LOGGER.error("Error testing credentials: %s", err)
             if "401" in str(err) or "authorization code" in str(err).lower():
                 raise InvalidAuth from err
             raise CannotConnect from err
         except Exception as err:
-            _LOGGER.error("Error testing credentials: %s", err)
             raise CannotConnect from err
 
 
