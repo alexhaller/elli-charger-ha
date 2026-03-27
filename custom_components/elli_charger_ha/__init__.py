@@ -43,7 +43,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except Exception as err:
         raise ConfigEntryNotReady("Could not connect to Elli API") from err
 
-    coordinator = ElliDataUpdateCoordinator(hass, client, entry)
+    coordinator = ElliDataUpdateCoordinator(hass, client, entry.data)
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -73,7 +73,7 @@ class ElliDataUpdateCoordinator(DataUpdateCoordinator):
         self,
         hass: HomeAssistant,
         client: ElliAPIClient,
-        entry: ConfigEntry,
+        config_data: dict,
     ) -> None:
         """Initialize the coordinator."""
         super().__init__(
@@ -83,11 +83,19 @@ class ElliDataUpdateCoordinator(DataUpdateCoordinator):
             update_interval=UPDATE_INTERVAL,
         )
         self.client = client
-        self._entry = entry
+        self._email = config_data[CONF_EMAIL]
+        self._password = config_data[CONF_PASSWORD]
 
     async def _async_update_data(self) -> dict:
         """Fetch data from API endpoint."""
         try:
+            if not self.client.access_token:
+                await self.hass.async_add_executor_job(
+                    self.client.login,
+                    self._email,
+                    self._password,
+                )
+
             sessions = await self.hass.async_add_executor_job(
                 self.client.get_charging_sessions
             )
@@ -97,7 +105,23 @@ class ElliDataUpdateCoordinator(DataUpdateCoordinator):
             await self._merge_firmware_info(stations)
             return {"sessions": sessions, "stations": stations}
         except Exception as err:
-            raise UpdateFailed(f"Error communicating with API: {err}") from err
+            _LOGGER.error("Error communicating with API: %s", err)
+            try:
+                await self.hass.async_add_executor_job(
+                    self.client.login,
+                    self._email,
+                    self._password,
+                )
+                sessions = await self.hass.async_add_executor_job(
+                    self.client.get_charging_sessions
+                )
+                stations = await self.hass.async_add_executor_job(
+                    self.client.get_stations
+                )
+                await self._merge_firmware_info(stations)
+                return {"sessions": sessions, "stations": stations}
+            except Exception as retry_err:
+                raise UpdateFailed(f"Error communicating with API: {retry_err}") from retry_err
 
     async def _merge_firmware_info(self, stations: list) -> None:
         """Fetch firmware info and merge it into the station list."""

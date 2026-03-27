@@ -1,7 +1,6 @@
 # Elli Charger Integration for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
-[![GitHub Release](https://img.shields.io/github/release/marcszy91/hacs-elli-charger.svg)](https://github.com/marcszy91/hacs-elli-charger/releases)
 
 Home Assistant integration for Elli charging stations (wallboxes). Monitor your charging sessions and station status directly in Home Assistant.
 
@@ -14,9 +13,7 @@ Home Assistant integration for Elli charging stations (wallboxes). Monitor your 
 - Automatic token refresh
 - Easy configuration through UI
 
-## Installation
-
-### HACS (Recommended)
+## HACS Installation
 
 1. Open HACS in Home Assistant
 2. Go to "Integrations"
@@ -28,15 +25,6 @@ Home Assistant integration for Elli charging stations (wallboxes). Monitor your 
 8. Find "Elli Charger" in the integration list
 9. Click "Download"
 10. Restart Home Assistant
-
-### Manual Installation
-
-1. Download the latest release from [GitHub](https://github.com/marcszy91/hacs-elli-charger/releases)
-2. Extract the files to your `custom_components` directory:
-   ```
-   custom_components/elli_charger/
-   ```
-3. Restart Home Assistant
 
 ## Configuration
 
