@@ -4,9 +4,9 @@
   "codeowners": ["@marcszy91"],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/marcszy91/hacs-elli-charger",
+  "documentation": "https://github.com/alexhaller/elli-charger-ha",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/marcszy91/hacs-elli-charger/issues",
+  "issue_tracker": "https://github.com/alexhaller/elli-charger-ha/issues",
   "requirements": ["elli-client==1.0.3"],
   "version": "1.0.0"
 }

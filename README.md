@@ -19,7 +19,7 @@ Home Assistant integration for Elli charging stations (wallboxes). Monitor your 
 2. Go to "Integrations"
 3. Click the three dots in the top right corner
 4. Select "Custom repositories"
-5. Add the repository URL: `https://github.com/marcszy91/hacs-elli-charger`
+5. Add the repository URL: `https://github.com/alexhaller/elli-charger-ha`
 6. Select category: "Integration"
 7. Click "Add"
 8. Find "Elli Charger" in the integration list
@@ -106,8 +106,8 @@ This integration uses the [elli-client](https://pypi.org/project/elli-client/) P
 
 ## Support
 
-- [Report Issues](https://github.com/marcszy91/hacs-elli-charger/issues)
-- [Feature Requests](https://github.com/marcszy91/hacs-elli-charger/issues)
+- [Report Issues](https://github.com/alexhaller/elli-charger-ha/issues)
+- [Feature Requests](https://github.com/alexhaller/elli-charger-ha/issues)
 
 ## License
 

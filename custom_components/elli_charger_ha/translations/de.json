@@ -8,6 +8,13 @@
           "email": "E-Mail",
           "password": "Passwort"
         }
+      },
+      "reauth_confirm": {
+        "title": "Elli Ladestation erneut authentifizieren",
+        "description": "Ihre Elli-Zugangsdaten sind nicht mehr gültig. Bitte geben Sie Ihr Passwort erneut ein.",
+        "data": {
+          "password": "Passwort"
+        }
       }
     },
     "error": {
@@ -16,7 +23,8 @@
       "unknown": "Ein unerwarteter Fehler ist aufgetreten"
     },
     "abort": {
-      "already_configured": "Dieses Elli-Konto ist bereits konfiguriert"
+      "already_configured": "Dieses Elli-Konto ist bereits konfiguriert",
+      "reauth_successful": "Erneute Authentifizierung war erfolgreich"
     }
   }
 }
