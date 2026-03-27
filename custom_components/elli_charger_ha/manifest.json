@@ -1,6 +1,6 @@
 {
-  "domain": "elli_charger",
-  "name": "Elli Charger",
+  "domain": "elli_charger_ha",
+  "name": "Elli Charger HA",
   "codeowners": ["@marcszy91"],
   "config_flow": true,
   "dependencies": [],

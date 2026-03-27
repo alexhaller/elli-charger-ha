@@ -1,7 +1,7 @@
 {
-  "name": "Elli Charger",
+  "name": "Elli Charger HA",
   "content_in_root": false,
-  "filename": "hacs-elli-charger",
+  "filename": "elli-charger-ha",
   "render_readme": true,
   "domains": ["sensor"],
   "homeassistant": "2024.1.0",
