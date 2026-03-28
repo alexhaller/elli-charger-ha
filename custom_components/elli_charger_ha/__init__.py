@@ -17,13 +17,11 @@ from homeassistant.helpers.update_coordinator import (
 
 from elli_client import ElliAPIClient
 
-from .const import DOMAIN
+from .const import CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS: list[Platform] = [Platform.SENSOR]
-
-UPDATE_INTERVAL = timedelta(minutes=5)
+PLATFORMS: list[Platform] = [Platform.SENSOR, Platform.BINARY_SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -45,13 +43,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except Exception as err:
         raise ConfigEntryNotReady("Could not connect to Elli API") from err
 
-    coordinator = ElliDataUpdateCoordinator(hass, client, entry.data)
+    scan_interval = entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
+    coordinator = ElliDataUpdateCoordinator(
+        hass, client, entry.data, timedelta(minutes=scan_interval)
+    )
 
     await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+
+    entry.async_on_unload(entry.add_update_listener(_async_options_updated))
 
     if not hass.services.has_service(DOMAIN, "download_charging_records"):
         async def handle_download_charging_records(call: ServiceCall) -> None:
@@ -93,6 +96,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True
 
 
+async def _async_options_updated(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Reload the integration when options change."""
+    await hass.config_entries.async_reload(entry.entry_id)
+
+
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
@@ -116,13 +124,14 @@ class ElliDataUpdateCoordinator(DataUpdateCoordinator):
         hass: HomeAssistant,
         client: ElliAPIClient,
         config_data: dict,
+        update_interval: timedelta,
     ) -> None:
         """Initialize the coordinator."""
         super().__init__(
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=UPDATE_INTERVAL,
+            update_interval=update_interval,
         )
         self.client = client
         self._email = config_data[CONF_EMAIL]

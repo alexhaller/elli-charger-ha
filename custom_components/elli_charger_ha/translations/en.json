@@ -26,5 +26,15 @@
       "already_configured": "This Elli account is already configured",
       "reauth_successful": "Re-authentication was successful"
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Elli Charger Options",
+        "data": {
+          "scan_interval": "Polling interval (minutes)"
+        }
+      }
+    }
   }
 }

@@ -26,5 +26,15 @@
       "already_configured": "Dieses Elli-Konto ist bereits konfiguriert",
       "reauth_successful": "Erneute Authentifizierung war erfolgreich"
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Elli Ladestation Einstellungen",
+        "data": {
+          "scan_interval": "Abfrageintervall (Minuten)"
+        }
+      }
+    }
   }
 }
