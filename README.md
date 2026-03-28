@@ -1,8 +1,9 @@
 # Elli Charger Integration for Home Assistant
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
+## Description
 
 Home Assistant integration for Elli charging stations (wallboxes). Monitor your charging sessions and station status directly in Home Assistant.
+This integration uses the [elli-client](https://pypi.org/project/elli-client/) Python package for communication with the Elli API.
 
 ## Features
 
@@ -68,41 +69,6 @@ The integration provides the following sensors:
   - Session ID
   - Station ID
   - Status
-
-## Usage Examples
-
-### Automation: Notify when charging complete
-
-```yaml
-automation:
-  - alias: "Notify when EV charging complete"
-    trigger:
-      - platform: numeric_state
-        entity_id: sensor.elli_current_session_power
-        below: 100
-        for:
-          minutes: 5
-    condition:
-      - condition: numeric_state
-        entity_id: sensor.elli_current_session_energy
-        above: 5
-    action:
-      - service: notify.mobile_app
-        data:
-          message: "EV charging complete! {{ states('sensor.elli_current_session_energy') }} kWh charged"
-```
-
-### Energy Dashboard
-
-Add the energy sensor to your Home Assistant Energy Dashboard:
-
-1. Go to **Settings** → **Dashboards** → **Energy**
-2. Under "Electricity grid" → "Add consumption"
-3. Select `sensor.elli_current_session_energy`
-
-## API Client
-
-This integration uses the [elli-client](https://pypi.org/project/elli-client/) Python package for communication with the Elli API.
 
 ## Support
 
