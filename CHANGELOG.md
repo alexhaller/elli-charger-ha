@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/alexhaller/elli-charger-ha/compare/v1.2.0...v1.3.0) (2026-03-28)
+
+### Features
+
+* reworked sensors ([006d90a](https://github.com/alexhaller/elli-charger-ha/commit/006d90a89ad6e49934cc56721c50703905fd89fc))
+
 ## [1.2.0](https://github.com/alexhaller/elli-charger-ha/compare/v1.1.0...v1.2.0) (2026-03-28)
 
 ### Features
