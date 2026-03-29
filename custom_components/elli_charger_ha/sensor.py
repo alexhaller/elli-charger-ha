@@ -262,7 +262,7 @@ class ElliAccumulatedChargingSensor(ElliBaseSensor):
         data = self._get_accumulated()
         if not data:
             return None
-        for key in ("total_energy_kwh", "energy_kwh", "totalEnergyKwh", "total_energy_wh", "energyWh"):
+        for key in ("total_energy_kwh", "energy_kwh", "totalEnergyKwh", "total_energy_wh", "energyWh", "accumulated_energy_wh"):
             if key in data:
                 val = data[key]
                 if "wh" in key.lower() and "kwh" not in key.lower():

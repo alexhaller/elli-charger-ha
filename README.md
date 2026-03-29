@@ -2,8 +2,9 @@
 
 ## Description
 
-Home Assistant integration for Elli charging stations (wallboxes). Monitor your charging sessions and station status directly in Home Assistant.
+This is a Home Assistant custom integration for Elli charging stations (wallboxes).
 This integration uses the [elli-client](https://pypi.org/project/elli-client/) Python package for communication with the Elli API.
+API can be seen here: https://github.com/mawiak/elli-client/blob/main/docs/api.md
 
 ## Features
 
@@ -35,40 +36,6 @@ This integration uses the [elli-client](https://pypi.org/project/elli-client/) P
 4. Enter your Elli account credentials:
    - Email
    - Password
-
-## Sensors
-
-The integration provides the following sensors:
-
-### Station Sensor
-- **Name**: `Elli [Station Name]`
-- **State**: Connected/Idle
-- **Attributes**:
-  - Station ID
-  - Name
-  - Serial Number
-  - Model
-  - Firmware Version
-
-### Current Session Energy
-- **Name**: `Elli Current Session Energy`
-- **Unit**: kWh
-- **Device Class**: Energy
-- **Attributes**:
-  - Session ID
-  - Station ID
-  - Start Time
-  - End Time (if completed)
-  - Status
-
-### Current Session Power
-- **Name**: `Elli Current Session Power`
-- **Unit**: W
-- **Device Class**: Power
-- **Attributes**:
-  - Session ID
-  - Station ID
-  - Status
 
 ## Support
 
