@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/alexhaller/elli-charger-ha/compare/v1.3.0...v1.3.1) (2026-03-29)
+
+### Bug Fixes
+
+* accumulated:energy should be shown correct now. ([dadf491](https://github.com/alexhaller/elli-charger-ha/commit/dadf4912059b6e8ebac46d3f9995823c0a68a86c))
+
 ## [1.3.0](https://github.com/alexhaller/elli-charger-ha/compare/v1.2.0...v1.3.0) (2026-03-28)
 
 ### Features
