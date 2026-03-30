@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/alexhaller/elli-charger-ha/compare/v1.3.1...v1.3.2) (2026-03-30)
+
+### Bug Fixes
+
+* Showing 0 for session power and energy instead of unknown for inactive sessions ([47ca8db](https://github.com/alexhaller/elli-charger-ha/commit/47ca8dbbbe8f6a7362cee071332e9913ab8faa0c))
+
 ## [1.3.1](https://github.com/alexhaller/elli-charger-ha/compare/v1.3.0...v1.3.1) (2026-03-29)
 
 ### Bug Fixes
