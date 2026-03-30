@@ -192,12 +192,12 @@ class ElliSessionEnergySensor(ElliBaseSensor):
         return f"Elli Wallbox {self._station_id} Session Energy"
 
     @property
-    def native_value(self) -> float | None:
+    def native_value(self) -> float:
         """Return the state of the sensor (energy in kWh)."""
         session = self._get_latest_session()
         if session and session.energy_consumption_wh is not None:
             return round(session.energy_consumption_wh / 1000, 2)
-        return None
+        return 0
 
 
 class ElliSessionPowerSensor(ElliBaseSensor):
@@ -222,12 +222,12 @@ class ElliSessionPowerSensor(ElliBaseSensor):
         return f"Elli Wallbox {self._station_id} Session Power"
 
     @property
-    def native_value(self) -> float | None:
+    def native_value(self) -> float:
         """Return the current charging power in Watts."""
         session = self._get_latest_session()
         if session and session.momentary_charging_speed_watts is not None:
             return session.momentary_charging_speed_watts
-        return None
+        return 0
 
 
 class ElliAccumulatedChargingSensor(ElliBaseSensor):
