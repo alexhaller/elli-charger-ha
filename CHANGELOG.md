@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/alexhaller/elli-charger-ha/compare/v1.3.2...v1.3.3) (2026-04-04)
+
+### Bug Fixes
+
+* deleted npm modules ([dcfca13](https://github.com/alexhaller/elli-charger-ha/commit/dcfca13a3ba4b93fc91ba9fbaa5144b969054313))
+
 ## [1.3.2](https://github.com/alexhaller/elli-charger-ha/compare/v1.3.1...v1.3.2) (2026-03-30)
 
 ### Bug Fixes
